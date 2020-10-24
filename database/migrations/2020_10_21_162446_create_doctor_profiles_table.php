@@ -15,8 +15,8 @@ class CreateDoctorProfilesTable extends Migration
     {
         Schema::create('doctor_profiles', function (Blueprint $table) {
             $table->id();
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('skill_id')->references('id')->on('skills');
+            $table->integer('user_id');
+            $table->integer('skill_id');
             $table->integer('age');
             $table->string('bio');
             $table->string('avatar');

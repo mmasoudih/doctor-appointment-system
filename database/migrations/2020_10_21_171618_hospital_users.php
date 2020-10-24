@@ -15,8 +15,8 @@ class HospitalUsers extends Migration
     {
         Schema::create('hospital_users', function (Blueprint $table) {
             $table->id();
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('hospital_id')->references('id')->on('hospitals');
+            $table->integer('user_id');
+            $table->integer('hospital_id');
             $table->timestamps();
         });
     }

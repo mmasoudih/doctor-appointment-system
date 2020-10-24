@@ -15,8 +15,8 @@ class CreateTurnsTable extends Migration
     {
         Schema::create('turns', function (Blueprint $table) {
             $table->id();
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('doctor_id')->references('id')->on('doctor_profiles');
+            $table->integer('user_id');
+            $table->integer('doctor_id');
             $table->string('visit_time');
             $table->timestamps();
         });
