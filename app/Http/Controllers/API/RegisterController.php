@@ -10,7 +10,6 @@ class RegisterController extends Controller
 {
     public function register(UserRegister $request)
     {
-        $isValid  = $request->validated();
-        return $isValid;
+        return $request;
     }
 }

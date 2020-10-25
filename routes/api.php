@@ -31,5 +31,10 @@ Route::group([
     Route::post('refresh', [AuthController::class, 'refresh']);
     Route::post('me', [AuthController::class, 'me']);
     Route::post('register', [RegisterController::class,'register']);
+   
 
+
+});
+Route::fallback( function (){
+    return response('error');
 });
