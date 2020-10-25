@@ -15,12 +15,16 @@ class CreateDoctorProfilesTable extends Migration
     {
         Schema::create('doctor_profiles', function (Blueprint $table) {
             $table->id();
-            $table->integer('user_id');
-            $table->integer('skill_id');
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('skill_id');
             $table->integer('age');
             $table->string('bio');
             $table->string('avatar');
             $table->timestamps();
+
+            $table->foreign('skill_id')->references('id')->on('skills');
+            $table->foreign('user_id')->references('id')->on('users');
+
         });
     }
 
