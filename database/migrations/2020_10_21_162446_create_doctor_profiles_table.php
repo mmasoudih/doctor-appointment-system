@@ -16,9 +16,9 @@ class CreateDoctorProfilesTable extends Migration
         Schema::create('doctor_profiles', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('doctor_id');
-            $table->integer('age');
-            $table->string('bio');
-            $table->string('avatar');
+            $table->integer('age')->nullable();
+            $table->string('bio')->nullable();
+            $table->string('avatar')->nullable();
             $table->timestamps();
 
             $table->foreign('doctor_id')->references('id')->on('doctors')->onDelete('cascade')->onUpdate('cascade');
