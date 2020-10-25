@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Skill extends Model
 {
     use HasFactory;
+
+    public function doctors()
+    {
+        return $this->hasMany('App\Models\User');
+    }
 }

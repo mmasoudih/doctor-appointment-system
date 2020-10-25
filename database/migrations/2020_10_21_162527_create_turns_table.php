@@ -15,10 +15,17 @@ class CreateTurnsTable extends Migration
     {
         Schema::create('turns', function (Blueprint $table) {
             $table->id();
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('doctor_id')->references('id')->on('doctor_profiles');
+
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('doctor_id');
+            $table->unsignedBigInteger('turn_date_id');
             $table->string('visit_time');
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('doctor_id')->references('id')->on('doctors')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('turn_date_id')->references('id')->on('turn_dates')->onDelete('cascade')->onUpdate('cascade');
+
         });
     }
 
