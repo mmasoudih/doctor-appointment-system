@@ -19,7 +19,6 @@ class CreateUsersTable extends Migration
             $table->string('family');
             $table->string('phone');
             $table->string('password');
-            $table->boolean('is_doctor')->default(0);
             $table->rememberToken();
             $table->text('profile_photo_path')->nullable();
             $table->timestamps();

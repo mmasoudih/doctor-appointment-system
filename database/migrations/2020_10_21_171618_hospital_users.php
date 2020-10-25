@@ -15,9 +15,13 @@ class HospitalUsers extends Migration
     {
         Schema::create('hospital_users', function (Blueprint $table) {
             $table->id();
-            $table->integer('user_id');
-            $table->integer('hospital_id');
+            $table->unsignedBigInteger('doctor_id');
+            $table->unsignedBigInteger('hospital_id');
             $table->timestamps();
+
+            $table->foreign('doctor_id')->references('id')->on('doctors')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('hospital_id')->references('id')->on('hospitals')->onDelete('cascade')->onUpdate('cascade');
+
         });
     }
 
