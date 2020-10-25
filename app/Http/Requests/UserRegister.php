@@ -41,6 +41,9 @@ class UserRegister extends FormRequest
             'phone.required' => 'شماره موبایل الزامی است.',
             'phone.regex' => 'شماره موبایل اشتباه است.',
             'phone.unique' => 'شماره موبایل تکراری است.',
+            'phone.max' => 'طول شماره موبایل اشتباه است.',
+            'password.required' => 'رمز عبور الزامی است.',
+            'password.min' => 'طول رمز عبور کوتاه است.',
         ];
     }
 
