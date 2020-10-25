@@ -1,6 +1,7 @@
 <?php
 
-use App\Http\Controllers\AuthController;
+use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\API\RegisterController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -29,5 +30,6 @@ Route::group([
     Route::post('logout', [AuthController::class, 'logout']);
     Route::post('refresh', [AuthController::class, 'refresh']);
     Route::post('me', [AuthController::class, 'me']);
+    Route::post('register', [RegisterController::class,'register']);
 
 });
