@@ -29,7 +29,8 @@ class UserRegister extends FormRequest
             'name' => 'required',
             'family' => 'required',
             'phone' => 'required|unique:users,phone|regex:/(09)[0-9]{9}/|max:11',
-            'password' => 'required|min:8'
+            'password' => 'required|min:8',
+            'doctor' => 'nullable|boolean'
         ];
     }
 
@@ -44,6 +45,7 @@ class UserRegister extends FormRequest
             'phone.max' => 'طول شماره موبایل اشتباه است.',
             'password.required' => 'رمز عبور الزامی است.',
             'password.min' => 'طول رمز عبور کوتاه است.',
+            'doctor.boolean' => 'مقدار باید 0 یا 1 باشد.'
         ];
     }
 
