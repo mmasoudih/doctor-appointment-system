@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRegister;
 use App\Models\User;
+use Illuminate\Support\Facades\Crypt;
 
 class RegisterController extends Controller
 {
@@ -14,7 +15,7 @@ class RegisterController extends Controller
             'name' => $request->name,
             'family' => $request->family,
             'phone' => $request->phone,
-            'password' => $request->password
+            'password' => Crypt::encryptString($request->password)
         ];
         User::create($data);
     }
