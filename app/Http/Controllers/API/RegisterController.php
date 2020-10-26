@@ -11,12 +11,14 @@ class RegisterController extends Controller
 {
     public function register(UserRegister $request)
     {
-        $data = [
-            'name' => $request->name,
-            'family' => $request->family,
-            'phone' => $request->phone,
-            'password' => Crypt::encryptString($request->password)
-        ];
-        User::create($data);
+        $user = new User;
+        $user->name = $request->name;
+        $user->family = $request->family;
+        $user->phone = $request->phone;
+        $user->password = Crypt::encryptString($request->password);
+        
+        return $user->save() ?
+            response()->json(['message' => 'ثبت نام با موفقیت انجام شد.'], 200) :
+            response()->json(['meesage' => 'ثبت نام انجام نشد.'], 422);
     }
 }
