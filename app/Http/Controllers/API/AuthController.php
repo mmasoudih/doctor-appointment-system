@@ -26,16 +26,11 @@ class AuthController extends Controller
      */
     public function login(Request $request)
     {
-    //    $credentials = request(['phone', 'password']);
+        $credentials = request(['phone', 'password']);
 
-        $credentials = ['phone' => $request->phone, 'password'=>$request->password];
-        $token = JWTAuth::attempt($credentials);
-       // dd($credentials);
-
-        dd($token);
-        // if (! $token = auth('api')->attempt($credentials)) {
-        //     return response()->json(['error' => 'Unauthorized'], 401);
-        // }
+        if (!$token = auth('api')->attempt($credentials)) {
+            return response()->json(['error' => 'شماره یا رمز عبور اشتباه است.'], 401);
+        }
 
         // return $this->respondWithToken($token);
     }
@@ -84,7 +79,8 @@ class AuthController extends Controller
         return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
-            'expires_in' => auth('api')->factory()->getTTL() * 60
+            'expires_in' => auth('api')->factory()->getTTL() * 60,
+            'user' => auth('api')->user()
         ]);
     }
 }
