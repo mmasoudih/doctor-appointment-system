@@ -21,13 +21,6 @@ class RegisterController extends Controller
         //save data in database
         $user = User::Create($data);
 
-        //get registered id
-        $id = $user->id;
-
-        if( $request->doctor ){
-            Doctor::Create(['user_id' => $id]);
-            return response()->json(['message' => 'ثبت نام با موفقیت انجام شد.'], 200);
-        }
 
         if($user){
             return response()->json(['message' => 'ثبت نام با موفقیت انجام شد.'], 200);
