@@ -2,23 +2,23 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\UserRegister;
 use App\Models\User;
+use Illuminate\Http\Request;
+use App\Http\Requests\UserRegister;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Hash;
 
 class RegisterController extends Controller
 {
-    public function register(UserRegister $request)
+    public function register(Request $request)
     {
-        $user = new User;
-        $user->name = $request->name;
-        $user->family = $request->family;
-        $user->phone = $request->phone;
-        $user->password = Crypt::encryptString($request->password);
-        
-        return $user->save() ?
-            response()->json(['message' => 'ثبت نام با موفقیت انجام شد.'], 200) :
-            response()->json(['meesage' => 'ثبت نام انجام نشد.'], 422);
+        $data = [
+            'name' => $request->name,
+            'family' => $request->family,
+            'phone' => $request->phone,
+            'password' => Hash::make($request->password)
+        ];
+        User::create($data);
     }
 }
