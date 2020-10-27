@@ -18,4 +18,8 @@ class Doctor extends Model
         'user_id'
     ];
 
+    public function doctor_profile()
+    {
+        return $this->hasOne('App\Models\DoctorProfile','doctor_id');
+    }
 }

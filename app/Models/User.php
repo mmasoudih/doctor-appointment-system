@@ -93,8 +93,5 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->hasOne('App\Models\UserProfile');
     }
-    public function doctor_profile()
-    {
-        return $this->hasOne('App\Models\DoctorProfile');
-    }
+    
 }

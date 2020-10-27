@@ -12,29 +12,24 @@ class RegisterController extends Controller
 {
     public function register(UserRegister $request)
     {
-        //create instanse of models 
-        $doctor = new Doctor;
-        $user = new User;
-        
+        $data = [
+            'name' => $request->name,
+            'family' => $request->family,
+            'phone' => $request->phone,
+            'password' => Hash::make($request->password),
+        ];
         //save data in database 
-        $user->name = $request->name;
-        $user->family = $request->family;
-        $user->phone = $request->phone;
-        $user->password = Hash::make($request->password);
-        $result = $user->save();
+        $user = User::Create($data);
 
         //get registered id 
         $id = $user->id;
         
-        
         if( $request->doctor ){
-            $doctor->user_id = $id;
-            $doctor->save();
+            Doctor::Create(['user_id' => $id]);
             return response()->json(['message' => 'ثبت نام با موفقیت انجام شد.'], 200);
         }
 
-
-        if($result){
+        if($user){
             return response()->json(['message' => 'ثبت نام با موفقیت انجام شد.'], 200);
         }else{
             return response()->json(['meesage' => 'ثبت نام انجام نشد.'], 422);
