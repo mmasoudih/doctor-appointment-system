@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Models\Doctor;
 use App\Models\DoctorProfile;
 use Illuminate\Http\Request;
 
@@ -25,14 +26,16 @@ class DoctorProfileController extends Controller
      */
     public function store(Request $request)
     {
-        
-        DoctorProfile::Create([
+
+        $doctorId = auth('api')->user()->id;
+        Doctor::find($doctorId)->doctorProfile()->create([
             'doctor_id' => auth('api')->user()->id,
             'age' => $request->age,
             'bio' => $request->bio,
             'avatar' => null
         ]);
 
+        return response()->json("success");
 
     }
 

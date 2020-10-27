@@ -15,4 +15,9 @@ class DoctorProfile extends Model
         'bio',
         'avatar'
     ];
+
+    // Relation to doctor
+    public function doctor(){
+        return $this->belongsTo(Doctor::class);
+    }
 }
