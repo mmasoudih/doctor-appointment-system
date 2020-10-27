@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\UserRegister;
-use App\Models\Doctor;
 use App\Models\User;
+use App\Models\Doctor;
+use App\Http\Requests\UserRegister;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 
 class RegisterController extends Controller
 {
-    public function register(Request $request)
+    public function register(UserRegister $request)
     {
         $data = [
             'name' => $request->name,

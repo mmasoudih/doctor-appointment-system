@@ -19,7 +19,7 @@ class User extends Authenticatable implements JWTSubject
     use Notifiable;
     use TwoFactorAuthenticatable;
 
-    
+
     /**
      * The attributes that are mass assignable.
      *
@@ -89,9 +89,14 @@ class User extends Authenticatable implements JWTSubject
 
 
 
-    public function user_profile()
+    // Relation to user
+    public function userProfile()
     {
         return $this->hasOne('App\Models\UserProfile');
     }
-    
+
+    // Relation to doctor
+    public function doctorProfile(){
+        return $this->hasOne(DoctorProfile::class);
+    }
 }
