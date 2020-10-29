@@ -96,11 +96,17 @@ class User extends Authenticatable implements JWTSubject
     // Relation to user
     public function userProfile()
     {
-        return $this->hasOne('App\Models\UserProfile');
+        return $this->hasOne(UserProfile::class);
     }
 
     // Relation to doctor
     public function doctorProfile(){
         return $this->hasOne(DoctorProfile::class);
+    }
+
+    // Relation to doctor model 
+    public function doctor()
+    {
+        return $this->hasOne(Doctor::class);
     }
 }

@@ -18,8 +18,14 @@ class Doctor extends Model
         'user_id'
     ];
 
+    // Relation to doctor profile model
     public function doctorProfile()
     {
-        return $this->hasOne('App\Models\DoctorProfile','doctor_id');
+        return $this->hasOne(DoctorProfile::class,'doctor_id');
+    }
+    // Relation to user model 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

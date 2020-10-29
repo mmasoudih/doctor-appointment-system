@@ -33,6 +33,6 @@ Route::group(['middleware' => 'api'], function () {
     });
     Route::group(['prefix' => 'doctor'], function () {
         Route::resource('profile', DoctorProfileController::class);
-        Route::post('register', DoctorRegisterController::class);
+        Route::post('register', [DoctorRegisterController::class, 'register']);
     });
 });

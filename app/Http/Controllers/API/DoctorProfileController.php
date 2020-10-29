@@ -27,14 +27,21 @@ class DoctorProfileController extends Controller
     public function store(Request $request)
     {
 
-        $doctorId = auth('api')->user()->id;
+        $doctor = auth('api')->user()->doctor;
+        
+        if($request->hasFile('avatar')){
+            // $path = $request->file('avatar')->store('avatars');
+            $path = $request->file('avatar')->storePublicly('avatars', 'public');
 
-        if (Doctor::find($doctorId) != null) {
-            Doctor::find($doctorId)->doctorProfile()->create([
-                'doctor_id' => auth('api')->user()->id,
+        }else{
+            $path = null;
+        }
+        
+        if ($doctor != null) {
+            $doctor->doctorProfile()->create([
                 'age' => $request->age,
                 'bio' => $request->bio,
-                'avatar' => null
+                'avatar' => $path
             ]);
         } else {
             return response()->json("fails");
