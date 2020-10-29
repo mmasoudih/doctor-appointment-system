@@ -28,15 +28,18 @@ class DoctorProfileController extends Controller
     {
 
         $doctorId = auth('api')->user()->id;
-        Doctor::find($doctorId)->doctorProfile()->create([
-            'doctor_id' => auth('api')->user()->id,
-            'age' => $request->age,
-            'bio' => $request->bio,
-            'avatar' => null
-        ]);
 
+        if (Doctor::find($doctorId) != null) {
+            Doctor::find($doctorId)->doctorProfile()->create([
+                'doctor_id' => auth('api')->user()->id,
+                'age' => $request->age,
+                'bio' => $request->bio,
+                'avatar' => null
+            ]);
+        } else {
+            return response()->json("fails");
+        }
         return response()->json("success");
-
     }
 
     /**

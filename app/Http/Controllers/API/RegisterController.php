@@ -12,16 +12,9 @@ class RegisterController extends Controller
 {
     public function register(UserRegister $request)
     {
-        $data = [
-            'name' => $request->name,
-            'family' => $request->family,
-            'phone' => $request->phone,
-            'password' => Hash::make($request->password),
-        ];
         //save data in database
-        $user = User::Create($data);
-
-
+        $user = User::Create($request->validated());
+        
         if($user){
             return response()->json(['message' => 'ثبت نام با موفقیت انجام شد.'], 200);
         }else{
