@@ -37,6 +37,6 @@ Route::group(['middleware' => 'api'], function () {
         Route::post('register', [DoctorRegisterController::class, 'register']);
     });
     Route::group(['prefix' => 'user'], function () {
-        Route::resource('profile', UserProfileController::class);
+        Route::post('profile', [UserProfileController::class, 'storeOrUpdate']);
     });
 });
