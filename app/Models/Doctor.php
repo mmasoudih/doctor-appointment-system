@@ -19,7 +19,7 @@ class Doctor extends Model
     ];
 
     // Relation to doctor profile model
-    public function doctorProfile()
+    public function profile()
     {
         return $this->hasOne(DoctorProfile::class,'doctor_id');
     }

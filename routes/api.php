@@ -4,6 +4,7 @@ use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\DoctorProfileController;
 use App\Http\Controllers\API\DoctorRegisterController;
 use App\Http\Controllers\API\RegisterController;
+use App\Http\Controllers\API\UserProfileController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -34,5 +35,8 @@ Route::group(['middleware' => 'api'], function () {
     Route::group(['prefix' => 'doctor'], function () {
         Route::resource('profile', DoctorProfileController::class);
         Route::post('register', [DoctorRegisterController::class, 'register']);
+    });
+    Route::group(['prefix' => 'user'], function () {
+        Route::resource('profile', UserProfileController::class);
     });
 });

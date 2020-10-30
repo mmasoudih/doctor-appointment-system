@@ -9,6 +9,12 @@ class UserProfile extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'user_id',
+        'bio',
+        'avatar'
+    ];
+
     // Relation to doctor
     public function user()
     {
