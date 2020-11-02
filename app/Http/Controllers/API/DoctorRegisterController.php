@@ -10,6 +10,6 @@ class DoctorRegisterController extends Controller
 {
     public function register(UserRegister $request)
     {
-        User::Create($request->validated())->doctor()->create()->doctorProfile()->create();
+        User::Create($request->validated())->doctor()->create()->profile()->create();
     }
 }
