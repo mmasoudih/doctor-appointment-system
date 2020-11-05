@@ -23,9 +23,16 @@ class Doctor extends Model
     {
         return $this->hasOne(DoctorProfile::class,'doctor_id');
     }
+    
     // Relation to user model 
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    // Relation to Specialty
+    public function specialties()
+    {
+        return $this->belongsToMany(Specialty::class,'doctors_specialties','doctor_id','specialty_id');
     }
 }
