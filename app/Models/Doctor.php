@@ -35,4 +35,9 @@ class Doctor extends Model
     {
         return $this->belongsToMany(Specialty::class,'doctors_specialties','doctor_id','specialty_id');
     }
+
+    public function availableDays()
+    {
+        return $this->hasOne(AvailableDays::class);
+    }
 }

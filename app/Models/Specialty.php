@@ -9,6 +9,9 @@ class Specialty extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'name',
+    ];
 
     // Relation to doctor
     public function doctor()

@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\API\DoctorAvailableDaysController;
 use App\Http\Controllers\API\DoctorProfileController;
 use App\Http\Controllers\API\DoctorRegisterController;
+use App\Http\Controllers\API\DoctorSpecialtyController;
 use App\Http\Controllers\API\RegisterController;
 use App\Http\Controllers\API\UserProfileController;
 use Illuminate\Http\Request;
@@ -35,6 +37,13 @@ Route::group(['middleware' => 'api'], function () {
     Route::group(['prefix' => 'doctor'], function () {
         Route::resource('profile', DoctorProfileController::class);
         Route::post('register', [DoctorRegisterController::class, 'register']);
+        
+        Route::apiResources([
+            'specialty' => DoctorSpecialtyController::class,
+            'day' => DoctorAvailableDaysController::class,
+        ]);
+        
+        
     });
     Route::group(['prefix' => 'user'], function () {
         Route::post('profile', [UserProfileController::class, 'storeOrUpdate']);
