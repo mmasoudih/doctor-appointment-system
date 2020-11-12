@@ -38,6 +38,6 @@ class Doctor extends Model
 
     public function availableDays()
     {
-        return $this->hasOne(AvailableDays::class);
+        return $this->hasMany(AvailableDays::class);
     }
 }

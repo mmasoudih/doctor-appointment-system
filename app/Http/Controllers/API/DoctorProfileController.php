@@ -40,12 +40,14 @@ class DoctorProfileController extends Controller
         }
 
         if ($doctor != null) {
-            return $doctor->doctorProfile()->updateOrCreate();
+            return $doctor->profile()->updateOrCreate([
+                'age' => $request->age,
+                'bio' => $request->bio,
+                'avatar' => $path,
 
-        //     'age' => $request->age,
-        //     'bio' => $request->bio,
-        //     'avatar' => $path
-        // ]
+            ]);
+          
+               
         } else {
             return response()->json("fails");
         }

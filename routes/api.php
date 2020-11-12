@@ -7,8 +7,11 @@ use App\Http\Controllers\API\DoctorRegisterController;
 use App\Http\Controllers\API\DoctorSpecialtyController;
 use App\Http\Controllers\API\RegisterController;
 use App\Http\Controllers\API\UserProfileController;
+use App\Models\Specialty;
+use App\Models\Week;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Tymon\JWTAuth\JWTAuth;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,7 +45,12 @@ Route::group(['middleware' => 'api'], function () {
             'specialty' => DoctorSpecialtyController::class,
             'day' => DoctorAvailableDaysController::class,
         ]);
-        
+        Route::get('days' , function(){
+            return Week::all();
+        });
+        Route::get('specialites' , function(){
+            return Specialty::all();
+        });
         
     });
     Route::group(['prefix' => 'user'], function () {

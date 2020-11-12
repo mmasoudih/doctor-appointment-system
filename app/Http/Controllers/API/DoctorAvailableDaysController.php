@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Models\Doctor;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class DoctorAvailableDaysController extends Controller
@@ -14,7 +16,9 @@ class DoctorAvailableDaysController extends Controller
      */
     public function index()
     {
-        //
+        $available_days = auth('api')->user()->doctor->availableDays->all();
+        // $a = Doctor::find($available_days)->availableDays->all();
+        return $available_days;
     }
 
     /**
@@ -25,7 +29,14 @@ class DoctorAvailableDaysController extends Controller
      */
     public function store(Request $request)
     {
-       
+        $doctor = auth('api')->user()->doctor;
+
+        return $doctor->availableDays()->create([
+            'doctor_id' => $doctor->id,
+            'week_day_id' => $request->week_day_id,
+            'start_time' =>  $request->start_time,
+            'end_time' => $request->end_time,
+        ]);
     }
 
     /**
@@ -36,7 +47,6 @@ class DoctorAvailableDaysController extends Controller
      */
     public function show($id)
     {
-        //
     }
 
     /**
