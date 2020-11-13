@@ -1,17 +1,18 @@
 <?php
 
+use App\Models\Week;
+use App\Models\Specialty;
+use Tymon\JWTAuth\JWTAuth;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AuthController;
-use App\Http\Controllers\API\DoctorAvailableDaysController;
+use App\Http\Controllers\API\MakeTurnController;
+use App\Http\Controllers\API\RegisterController;
+use App\Http\Controllers\API\UserProfileController;
 use App\Http\Controllers\API\DoctorProfileController;
 use App\Http\Controllers\API\DoctorRegisterController;
 use App\Http\Controllers\API\DoctorSpecialtyController;
-use App\Http\Controllers\API\RegisterController;
-use App\Http\Controllers\API\UserProfileController;
-use App\Models\Specialty;
-use App\Models\Week;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
-use Tymon\JWTAuth\JWTAuth;
+use App\Http\Controllers\API\DoctorAvailableDaysController;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,7 +41,7 @@ Route::group(['middleware' => 'api'], function () {
     Route::group(['prefix' => 'doctor'], function () {
         Route::resource('profile', DoctorProfileController::class);
         Route::post('register', [DoctorRegisterController::class, 'register']);
-        
+
         Route::apiResources([
             'specialty' => DoctorSpecialtyController::class,
             'day' => DoctorAvailableDaysController::class,
@@ -51,9 +52,10 @@ Route::group(['middleware' => 'api'], function () {
         Route::get('specialites' , function(){
             return Specialty::all();
         });
-        
+
     });
     Route::group(['prefix' => 'user'], function () {
         Route::post('profile', [UserProfileController::class, 'storeOrUpdate']);
+        Route::get('save-turn', [MakeTurnController::class, 'addTurn']);
     });
 });
