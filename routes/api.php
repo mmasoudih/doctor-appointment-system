@@ -29,33 +29,37 @@ use App\Http\Controllers\API\DoctorAvailableDaysController;
 //     return $request->user();
 // });
 
-Route::group(['middleware' => 'api'], function () {
-
+// Route::group(['middleware' => 'api'], function () {
+Route::get('test', function(){
+    return response(['message' => 'user not auth'], 401);
+})->name('verify');
     Route::group(['prefix' => 'auth'], function () {
         Route::post('login', [AuthController::class, 'login']);
         Route::post('logout', [AuthController::class, 'logout']);
         Route::post('refresh', [AuthController::class, 'refresh']);
-        Route::post('me', [AuthController::class, 'me']);
         Route::post('register', [RegisterController::class, 'register']);
-    });
-    Route::group(['prefix' => 'doctor'], function () {
-        Route::resource('profile', DoctorProfileController::class);
         Route::post('register', [DoctorRegisterController::class, 'register']);
-
-        Route::apiResources([
-            'specialty' => DoctorSpecialtyController::class,
-            'day' => DoctorAvailableDaysController::class,
-        ]);
-        Route::get('days' , function(){
-            return Week::all();
-        });
-        Route::get('specialites' , function(){
-            return Specialty::all();
-        });
-
     });
-    Route::group(['prefix' => 'user'], function () {
-        Route::post('profile', [UserProfileController::class, 'storeOrUpdate']);
-        Route::get('save-turn', [MakeTurnController::class, 'addTurn']);
+    Route::group(['middleware' => 'jwt.verify'], function () {
+        Route::get('me', [AuthController::class, 'me']);
+        Route::group(['prefix' => 'doctor'], function () {
+            Route::resource('profile', DoctorProfileController::class);
+            Route::apiResources([
+                'specialty' => DoctorSpecialtyController::class,
+                'day' => DoctorAvailableDaysController::class,
+            ]);
+            Route::get('days' , function(){
+                return Week::all();
+            });
+            Route::get('specialites' , function(){
+                return Specialty::all();
+            });
+    
+        });
+        Route::group(['prefix' => 'user'], function () {
+            Route::post('profile', [UserProfileController::class, 'storeOrUpdate']);
+            Route::get('save-turn', [MakeTurnController::class, 'addTurn']);
+        }); 
     });
-});
+    
+// });

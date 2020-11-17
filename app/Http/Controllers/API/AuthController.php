@@ -5,6 +5,10 @@ namespace App\Http\Controllers\API;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
+use Tymon\JWTAuth\Exceptions\JWTException;
+use Tymon\JWTAuth\Exceptions\TokenExpiredException;
+use Tymon\JWTAuth\Exceptions\TokenInvalidException;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AuthController extends Controller
 {
@@ -41,7 +45,28 @@ class AuthController extends Controller
      */
     public function me()
     {
-        return response()->json(auth('api')->user());
+        try {
+
+            if (! $user = JWTAuth::parseToken()->authenticate()) {
+                    return response()->json(['user_not_found'], 404);
+            }
+
+    } catch (TokenExpiredException $e) {
+
+            return response()->json(['token_expired'], $e->getStatusCode());
+
+    } catch (TokenInvalidException $e) {
+
+            return response()->json(['token_invalid'], $e->getStatusCode());
+
+    } catch (JWTException $e) {
+
+            return response()->json(['token_absent'], $e->getStatusCode());
+
+    }
+
+    return response()->json(compact('user'));
+        // return response()->json(auth('api')->user());
     }
 
     /**
@@ -78,7 +103,7 @@ class AuthController extends Controller
         return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
-            'expires_in' => auth('api')->factory()->getTTL() * 60,
+            'expires_in' => auth('api')->factory()->getTTL(),
             'user' => auth('api')->user()
         ]);
     }

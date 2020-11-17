@@ -10,6 +10,11 @@ class DoctorRegisterController extends Controller
 {
     public function register(UserRegister $request)
     {
-        User::Create($request->validated())->doctor()->create()->profile()->create();
+        $user = User::Create($request->validated())->doctor()->create()->profile()->create();
+        if($user){
+            return response()->json(['message' => 'ثبت نام با موفقیت انجام شد.'], 200);
+        }else{
+            return response()->json(['meesage' => 'ثبت نام انجام نشد.'], 422);
+        }
     }
 }
