@@ -38,7 +38,7 @@ Route::get('test', function(){
         Route::post('logout', [AuthController::class, 'logout']);
         Route::post('refresh', [AuthController::class, 'refresh']);
         Route::post('register', [RegisterController::class, 'register']);
-        Route::post('register', [DoctorRegisterController::class, 'register']);
+        Route::post('doctor/register', [DoctorRegisterController::class, 'register']);
     });
     Route::group(['middleware' => 'jwt.verify'], function () {
         Route::get('me', [AuthController::class, 'me']);
