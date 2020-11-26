@@ -19,7 +19,7 @@ class CreateTurnsTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('doctor_id');
             $table->unsignedBigInteger('turn_date_id');
-            $table->timestamps('visit_time');
+            $table->timestamp('visit_time');
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');

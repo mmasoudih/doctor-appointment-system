@@ -15,7 +15,7 @@ class CreateTurnDatesTable extends Migration
     {
         Schema::create('turn_dates', function (Blueprint $table) {
             $table->id();
-            $table->timestamp('date');
+            $table->date('date');
             $table->timestamps();
         });
     }

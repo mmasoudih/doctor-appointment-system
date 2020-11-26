@@ -8,6 +8,7 @@ use App\Models\DoctorProfile;
 use App\Models\TurnDate;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class DoctorProfileController extends Controller
 {
@@ -25,33 +26,62 @@ class DoctorProfileController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
+     
+     
+     
      */
+/*
+
+public function store(Request $request)
+    {
+
+      
+
+
+        $doctor = auth('api')->user();
+        
+        return $doctor;
+        $dataUpdate = [];
+
+        if ($request->hasFile('avatar')) {
+
+            Storage::disk('public')->delete($doctor->profile->avatar);
+            $dataUpdate['avatar'] = $request->file('avatar')->storePublicly('avatars', 'public');
+        } else {
+            $dataUpdate['avatar'] = $doctor->profile->avatar;
+        }
+        $dataUpdate['bio'] = $request->bio;
+        $dataUpdate['age'] = $request->age;
+            $doctor->profile()->updateOrCreate([
+                'doctor_id' => $doctor->id
+            ], $dataUpdate);
+          
+        return response("success", 200);
+    }
+*/
+
     public function store(Request $request)
     {
 
         $doctor = auth('api')->user()->doctor;
+        
+        // return $doctor;
+        $dataUpdate = [];
 
-        if($request->hasFile('avatar')){
-            // $path = $request->file('avatar')->store('avatars');
-            $path = $request->file('avatar')->storePublicly('avatars', 'public');
+        if ($request->hasFile('avatar')) {
 
-        }else{
-            $path = null;
-        }
-
-        if ($doctor != null) {
-            return $doctor->profile()->updateOrCreate([
-                'age' => $request->age,
-                'bio' => $request->bio,
-                'avatar' => $path,
-
-            ]);
-          
-               
+            Storage::disk('public')->delete($doctor->profile->avatar);
+            $dataUpdate['avatar'] = $request->file('avatar')->storePublicly('avatars', 'public');
         } else {
-            return response()->json("fails");
+            $dataUpdate['avatar'] = $doctor->profile->avatar;
         }
-        return response()->json("success");
+        $dataUpdate['bio'] = $request->bio;
+        $dataUpdate['age'] = $request->age;
+            $doctor->profile()->updateOrCreate([
+                'id' => $doctor->id
+            ], $dataUpdate);
+          
+        return response("success", 200);
     }
 
     /**

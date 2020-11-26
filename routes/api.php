@@ -13,6 +13,7 @@ use App\Http\Controllers\API\DoctorProfileController;
 use App\Http\Controllers\API\DoctorRegisterController;
 use App\Http\Controllers\API\DoctorSpecialtyController;
 use App\Http\Controllers\API\DoctorAvailableDaysController;
+use App\Models\Doctor;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,7 +42,20 @@ Route::get('test', function(){
         Route::post('doctor/register', [DoctorRegisterController::class, 'register']);
     });
     Route::group(['middleware' => 'jwt.verify'], function () {
-        Route::get('me', [AuthController::class, 'me']);
+
+        Route::get('getUser', function(){
+            $user = auth('api')->user();
+            $doctor = Doctor::find($user->id);
+            $doctorProfile = $doctor->profile;
+            return response([
+                'user' => [
+                    'user' => $user,
+                    'profile' =>  $doctorProfile
+                ],
+                'is_doctor' => $doctor ? true : false,
+            ], 200);
+        });
+        
         Route::group(['prefix' => 'doctor'], function () {
             Route::resource('profile', DoctorProfileController::class);
             Route::apiResources([
