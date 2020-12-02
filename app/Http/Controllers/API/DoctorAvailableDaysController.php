@@ -31,12 +31,26 @@ class DoctorAvailableDaysController extends Controller
     {
         $doctor = auth('api')->user()->doctor;
 
-        return $doctor->availableDays()->create([
-            'doctor_id' => $doctor->id,
-            'week_day_id' => $request->week_day_id,
-            'start_time' =>  $request->start_time,
-            'end_time' => $request->end_time,
-        ]);
+        // return $doctor->availableDays()->create([
+        //     'doctor_id' => $doctor->id,
+        //     'week_day_id' => $request->week_day_id,
+        //     'start_time' =>  $request->start_time,
+        //     'end_time' => $request->end_time,
+        // ]);
+        // $r = [];
+        foreach ($request->all() as $day) {
+            $doctor->availableDays()->updateOrcreate(
+                [
+                    'week_day_id' => $day['id'],
+                ],
+                [
+                    'week_day_id' => $day['id'],
+                    'start_time' =>  $day['start_time'],
+                    'end_time' => $day['end_time'],
+                ]
+            );
+        }
+        // return $r;
     }
 
     /**

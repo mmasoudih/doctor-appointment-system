@@ -31,14 +31,11 @@ class weekTable extends Seeder
         ]);
 
         Week::Create([
-            'week_day' => 'جهار‌شنبه',
+            'week_day' => 'چهار‌شنبه',
         ]);
 
         Week::Create([
             'week_day' => 'پنج‌شنبه',
-        ]);
-        Week::Create([
-            'week_day' => 'جمعه',
         ]);
     }
 }
