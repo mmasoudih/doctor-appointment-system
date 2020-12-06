@@ -14,6 +14,7 @@ use App\Http\Controllers\API\DoctorRegisterController;
 use App\Http\Controllers\API\DoctorSpecialtyController;
 use App\Http\Controllers\API\DoctorAvailableDaysController;
 use App\Models\Doctor;
+use App\Models\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -45,12 +46,25 @@ Route::get('test', function(){
 
         Route::get('getUser', function(){
             $user = auth('api')->user();
+
             $doctor = Doctor::find($user->id);
-            $doctorProfile = $doctor->profile;
+            $user = User::find($user->id);
+            if($doctor != null){
+                $doctorProfile = $doctor->profile;
+            }else{
+                $doctorProfile = null;
+            }
+            if($user != null){
+                $userProfile = $user->profile;
+            }else{
+                $userProfile = null;
+            }
+            // return $doctor;
+            
             return response([
                 'user' => [
                     'user' => $user,
-                    'profile' =>  $doctorProfile
+                    // 'profile' =>  $doctor !== null ?  $doctorProfile : $userProfile
                 ],
                 'is_doctor' => $doctor ? true : false,
             ], 200);

@@ -17,7 +17,6 @@
         "laravel/sanctum": "^2.6",
         "laravel/tinker": "^2.0",
         "livewire/livewire": "^2.0",
-        "spatie/laravel-permission": "^3.18",
         "tymon/jwt-auth": "^1.0"
     },
     "require-dev": {

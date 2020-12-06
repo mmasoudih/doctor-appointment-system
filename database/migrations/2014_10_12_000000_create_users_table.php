@@ -19,6 +19,7 @@ class CreateUsersTable extends Migration
             $table->string('family');
             $table->string('phone');
             $table->string('password');
+            $table->boolean('is_admin')->default(false);
             $table->rememberToken();
             $table->text('profile_photo_path')->nullable();
             $table->timestamps();
