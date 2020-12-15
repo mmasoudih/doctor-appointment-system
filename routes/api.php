@@ -44,11 +44,24 @@ Route::group(['prefix' => 'auth'], function () {
     Route::post('doctor/register', [DoctorRegisterController::class, 'register']);
 });
 Route::group(['middleware' => 'jwt.verify'], function () {
+
+    Route::post('changeDoctorStatus/{id}', function ($id) {
+        $doctor = Doctor::where('user_id', $id)->first();
+        if ($doctor != null && $doctor->is_active == 0) {
+            $doctor->is_active = true;
+            $doctor->save();
+            return response(['حساب دکتر با موفقیت فعال شد'], 200);
+        } else {
+            $doctor->is_active = false;
+            $doctor->save();
+            return response(['حساب دکتر با موفقیت غیر فعال شد'], 200);
+        }
+    });
     Route::get('getDoctors', function () {
         $doctor = DB::table('users')
             ->join('doctors', 'users.id', '=', 'doctors.user_id')
-            ->get(['users.id','users.name', 'users.family', 'users.phone','doctors.is_active']);
-            return $doctor;
+            ->get(['users.id', 'users.name', 'users.family', 'users.phone', 'doctors.is_active']);
+        return $doctor;
     });
     Route::get('getUser', function () {
         $user = auth('api')->user();
