@@ -65,7 +65,7 @@ Route::group(['middleware' => 'jwt.verify'], function () {
     });
     Route::get('getUser', function () {
         $user = auth('api')->user();
-
+        
         $doctor = Doctor::select('id')->where('user_id', $user->id)->get();
         // $user = User::find($user->id);
         // if($doctor != null){
@@ -79,13 +79,18 @@ Route::group(['middleware' => 'jwt.verify'], function () {
         //     $userProfile = null;
         // }
         // return $doctor;
+        // $u = User::where('id', $user->id)->with('profile')->first();
         $u = User::find($user->id)->with('profile')->first();
+        // $u = User::find();
+        
+        // return $u;
         return response([
             'user' => [
                 'user' => $u,
                 // 'profile' =>  $doctor !== null ?  $doctorProfile : $userProfile
             ],
             'is_doctor' => $doctor->count() != 0 ? true : false,
+            'is_active' => $doctor->count() != 0 ? auth('api')->user()->doctor->is_active : 0
         ], 200);
     });
 
@@ -104,7 +109,7 @@ Route::group(['middleware' => 'jwt.verify'], function () {
     });
     Route::group(['prefix' => 'user'], function () {
         Route::post('profile', [UserProfileController::class, 'storeOrUpdate']);
-        Route::get('save-turn', [MakeTurnController::class, 'addTurn']);
+        Route::post('save-turn', [MakeTurnController::class, 'addTurn']);
     });
 });
     

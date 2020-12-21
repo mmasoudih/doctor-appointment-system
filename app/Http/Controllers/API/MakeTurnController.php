@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Models\AvailableDays;
+use App\Models\Doctor;
 use App\Models\Turn;
 use App\Models\TurnDate;
 use Carbon\Carbon;
@@ -19,10 +21,16 @@ class MakeTurnController extends Controller
             ['date' =>  $date],
             ['date' => $date]
         );
-
+        $available = AvailableDays::find($request->availabe_day_id);
+        
         // get how many visitor have turn for current date and doctor.
-        $howManyVisitor = Turn::where(['turn_date_id' => $turnDate->id, 'doctor_id' => $request->doctor_id])->count();
-
+        $howManyVisitor = Turn::where(['turn_date_id' => $turnDate->id, 'doctor_id' => $available->doctor_id])->count();
+        
+        
+        // foreach ($user->roles as $role) {
+        //     echo $role->pivot->created_at;
+        // }
+        return $available->start_time;
 
         $startTime = Carbon::parse($turnDate->date);
         $startTime = $startTime->setHours(8);// hospital will open at 8,
